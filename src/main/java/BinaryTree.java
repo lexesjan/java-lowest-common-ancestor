@@ -6,6 +6,11 @@ class TreeNode {
   TreeNode(int value) {
     this.value = value;
   }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
 }
 
 public class BinaryTree {
@@ -31,5 +36,11 @@ public class BinaryTree {
     TreeNode[] result = new TreeNode[1];
     lowestCommonAncestorHelper(this.root, node1, node2, result);
     return result[0];
+  }
+
+  @Override
+  public String toString() {
+    if (root == null) return null;
+    return root.toString();
   }
 }
