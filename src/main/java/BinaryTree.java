@@ -11,6 +11,10 @@ class TreeNode {
 public class BinaryTree {
   TreeNode root;
 
+  public BinaryTree(TreeNode root) {
+    this.root = root;
+  }
+
   private boolean lowestCommonAncestorHelper(
       TreeNode root, TreeNode node1, TreeNode node2, TreeNode[] result) {
     if (root == null) return false;
