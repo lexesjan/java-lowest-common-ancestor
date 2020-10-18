@@ -32,9 +32,9 @@ public class BinaryTree {
 
   public TreeNode lowestCommonAncestor(TreeNode node1, TreeNode node2) {
     if (node1 == null || node2 == null) return null;
-    if (node1.value == node2.value) return node1;
     TreeNode[] result = new TreeNode[1];
-    lowestCommonAncestorHelper(this.root, node1, node2, result);
+    boolean inputNodeExists = lowestCommonAncestorHelper(this.root, node1, node2, result);
+    if (inputNodeExists && node1.value == node2.value) return node1;
     return result[0];
   }
 

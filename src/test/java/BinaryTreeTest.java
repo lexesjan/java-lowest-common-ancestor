@@ -59,6 +59,8 @@ public class BinaryTreeTest {
           {"LCA should be 3", new BinaryTree(root), root.left.left, root.left.left, root.left.left},
           // node is not in the graph case
           {"LCA should be null", new BinaryTree(root), root.left.left, new TreeNode(6), null},
+          {"LCA should be null", new BinaryTree(root), new TreeNode(6), new TreeNode(6), null},
+          {"LCA should be null", new BinaryTree(root), root.left.left, null, null},
         });
   }
 
