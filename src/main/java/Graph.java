@@ -1,3 +1,6 @@
+import java.util.HashSet;
+import java.util.Set;
+
 class Node {
   int value;
   Node[] children;
@@ -19,24 +22,28 @@ public class Graph {
     this.root = root;
   }
 
-  private boolean lowestCommonAncestorHelper(Node root, Node node1, Node node2, Node[] result) {
-    if (root == null) return false;
+  private int lowestCommonAncestorHelper(
+      Node root, Node node1, Node node2, Set<Node> visited, Node[] result) {
+    if (root == null) return 0;
+    visited.add(root);
     boolean rootIsEitherNode = root.value == node1.value || root.value == node2.value;
-    boolean left = false;
-    boolean right = false;
+    int numberOfInputNodesFound = rootIsEitherNode ? 1 : 0;
     if (root.children != null) {
-      left = lowestCommonAncestorHelper(root.children[0], node1, node2, result);
-      right = lowestCommonAncestorHelper(root.children[1], node1, node2, result);
+      for (Node child : root.children) {
+        numberOfInputNodesFound += lowestCommonAncestorHelper(child, node1, node2, visited, result);
+      }
     }
-    if (left && right || rootIsEitherNode && (left || right)) result[0] = root;
-    return left || right || rootIsEitherNode;
+    if (numberOfInputNodesFound >= 2 && result[0] == null) result[0] = root;
+    return numberOfInputNodesFound;
   }
 
   public Node lowestCommonAncestor(Node node1, Node node2) {
     if (node1 == null || node2 == null) return null;
     Node[] result = new Node[1];
-    boolean inputNodeExists = lowestCommonAncestorHelper(this.root, node1, node2, result);
-    if (inputNodeExists && node1.value == node2.value) return node1;
+    Set<Node> visited = new HashSet<>();
+    lowestCommonAncestorHelper(this.root, node1, node2, visited, result);
+    if (!visited.contains(node1) || !visited.contains(node2)) return null;
+    if (visited.contains(node1) && node1.value == node2.value) return node1;
     return result[0];
   }
 
