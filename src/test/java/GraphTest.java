@@ -27,34 +27,68 @@ public class GraphTest {
             \
              5
     */
-    Node[] nodes = new Node[7];
-    for (int i = 0; i < nodes.length; i++) nodes[i] = new Node(i);
-    Node root = nodes[0];
-    root.children = new Node[] {nodes[1], nodes[2]};
-    nodes[1].children = new Node[] {nodes[3], nodes[4]};
-    nodes[4].children = new Node[] {null, nodes[5]};
+    Node[] nodes0 = new Node[7];
+    for (int i = 0; i < nodes0.length; i++) nodes0[i] = new Node(i);
+    Node root0 = nodes0[0];
+    root0.children = new Node[] {nodes0[1], nodes0[2]};
+    nodes0[1].children = new Node[] {nodes0[3], nodes0[4]};
+    nodes0[4].children = new Node[] {null, nodes0[5]};
+
+    /*
+           0 ---
+         / | \  \
+        1  |  2  5
+         \ | /   |
+           3     |
+             \  /
+              4
+    */
+    Node[] nodes1 = new Node[6];
+    for (int i = 0; i < nodes1.length; i++) nodes1[i] = new Node(i);
+    Node root1 = nodes1[0];
 
     return Arrays.asList(
         new Object[][] {
           // null cases
+          // root0
           {"LCA should be null", new Graph(null), null, null, null},
           // base cases
-          {"LCA should be 0", new Graph(root), nodes[1], nodes[2], root},
-          {"LCA should be 0", new Graph(root), nodes[3], nodes[2], root},
-          {"LCA should be 0", new Graph(root), nodes[5], nodes[2], root},
-          {"LCA should be 1", new Graph(root), nodes[3], nodes[5], nodes[1]},
-          {"LCA should be 1", new Graph(root), nodes[3], nodes[4], nodes[1]},
+          // root0
+          {"LCA should be 0", new Graph(root0), nodes0[1], nodes0[2], root0},
+          {"LCA should be 0", new Graph(root0), nodes0[3], nodes0[2], root0},
+          {"LCA should be 0", new Graph(root0), nodes0[5], nodes0[2], root0},
+          {"LCA should be 1", new Graph(root0), nodes0[3], nodes0[5], nodes0[1]},
+          {"LCA should be 1", new Graph(root0), nodes0[3], nodes0[4], nodes0[1]},
+          // root1
+          {"LCA should be 0", new Graph(root1), nodes1[1], nodes1[2], nodes1[0]},
+          {"LCA should be 0", new Graph(root1), nodes1[1], nodes1[3], nodes1[0]},
+          {"LCA should be 0", new Graph(root1), nodes1[2], nodes1[3], nodes1[0]},
+          {"LCA should be 0", new Graph(root1), nodes1[3], nodes1[4], nodes1[2]},
           // lca is one of the input nodes cases
-          {"LCA should be 0", new Graph(root), nodes[1], root, root},
-          {"LCA should be 1", new Graph(root), nodes[3], nodes[1], nodes[1]},
-          {"LCA should be 1", new Graph(root), nodes[1], nodes[4], nodes[1]},
+          // root0
+          {"LCA should be 0", new Graph(root0), nodes0[1], root0, root0},
+          {"LCA should be 1", new Graph(root0), nodes0[3], nodes0[1], nodes0[1]},
+          {"LCA should be 1", new Graph(root0), nodes0[1], nodes0[4], nodes0[1]},
+          // root1
+          {"LCA should be 1", new Graph(root1), nodes1[1], nodes1[4], nodes1[1]},
+          {"LCA should be 1", new Graph(root1), nodes1[3], nodes1[4], nodes1[3]},
           // lca is both of the input nodes cases
-          {"LCA should be 0", new Graph(root), root, root, root},
-          {"LCA should be 3", new Graph(root), nodes[3], nodes[3], nodes[3]},
+          // root0
+          {"LCA should be 0", new Graph(root0), root0, root0, root0},
+          {"LCA should be 3", new Graph(root0), nodes0[3], nodes0[3], nodes0[3]},
+          // root1
+          {"LCA should be 1", new Graph(root1), nodes1[4], nodes1[4], nodes1[4]},
+          {"LCA should be 1", new Graph(root1), nodes1[3], nodes1[4], nodes1[3]},
+          {"LCA should be 1", new Graph(root1), nodes1[5], nodes1[5], nodes1[5]},
           // node is not in the graph case
-          {"LCA should be null", new Graph(root), nodes[3], nodes[6], null},
-          {"LCA should be null", new Graph(root), nodes[6], nodes[6], null},
-          {"LCA should be null", new Graph(root), nodes[3], null, null},
+          // root0
+          {"LCA should be null", new Graph(root0), nodes0[3], nodes0[6], null},
+          {"LCA should be null", new Graph(root0), nodes0[6], nodes0[6], null},
+          {"LCA should be null", new Graph(root0), nodes0[3], null, null},
+          // root1
+          {"LCA should be null", new Graph(root1), nodes1[3], nodes1[5], null},
+          {"LCA should be null", new Graph(root1), nodes1[5], nodes1[5], null},
+          {"LCA should be null", new Graph(root1), nodes1[3], null, null},
         });
   }
 
