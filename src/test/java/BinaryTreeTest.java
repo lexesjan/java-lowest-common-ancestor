@@ -87,6 +87,6 @@ public class BinaryTreeTest {
   @Test
   public void testLowestCommonAncestor() {
     TreeNode lca = binaryTree.lowestCommonAncestor(node1, node2);
-    assertEquals(message, lca, expectedOutput);
+    assertEquals(message, expectedOutput, lca);
   }
 }
