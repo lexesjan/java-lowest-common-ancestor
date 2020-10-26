@@ -77,7 +77,6 @@ public class GraphTest {
           {"LCA should be 1", new Graph(root1), nodes1[1], nodes1[4], nodes1[1]},
           {"LCA should be 3", new Graph(root1), nodes1[3], nodes1[4], nodes1[3]},
           {"LCA should be 1", new Graph(root1), nodes1[1], nodes1[3], nodes1[1]},
-          {"LCA should be 3", new Graph(root1), nodes1[3], nodes1[4], nodes1[3]},
           {"LCA should be 2", new Graph(root1), nodes1[2], nodes1[3], nodes1[2]},
           {"LCA should be 2", new Graph(root1), nodes1[2], nodes1[4], nodes1[2]},
           // lca is both of the input nodes cases
@@ -86,7 +85,7 @@ public class GraphTest {
           {"LCA should be 3", new Graph(root0), nodes0[3], nodes0[3], nodes0[3]},
           // root1
           {"LCA should be 4", new Graph(root1), nodes1[4], nodes1[4], nodes1[4]},
-          {"LCA should be 3", new Graph(root1), nodes1[3], nodes1[4], nodes1[3]},
+          {"LCA should be 3", new Graph(root1), nodes1[3], nodes1[3], nodes1[3]},
           {"LCA should be 5", new Graph(root1), nodes1[5], nodes1[5], nodes1[5]},
           // node is not in the graph case
           // root0
