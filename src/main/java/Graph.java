@@ -1,9 +1,8 @@
-class TreeNode {
+class Node {
   int value;
-  TreeNode left;
-  TreeNode right;
+  Node[] children;
 
-  TreeNode(int value) {
+  Node(int value) {
     this.value = value;
   }
 
@@ -13,26 +12,29 @@ class TreeNode {
   }
 }
 
-public class BinaryTree {
-  TreeNode root;
+public class Graph {
+  Node root;
 
-  public BinaryTree(TreeNode root) {
+  public Graph(Node root) {
     this.root = root;
   }
 
-  private boolean lowestCommonAncestorHelper(
-      TreeNode root, TreeNode node1, TreeNode node2, TreeNode[] result) {
+  private boolean lowestCommonAncestorHelper(Node root, Node node1, Node node2, Node[] result) {
     if (root == null) return false;
     boolean rootIsEitherNode = root.value == node1.value || root.value == node2.value;
-    boolean left = lowestCommonAncestorHelper(root.left, node1, node2, result);
-    boolean right = lowestCommonAncestorHelper(root.right, node1, node2, result);
+    boolean left = false;
+    boolean right = false;
+    if (root.children != null) {
+      left = lowestCommonAncestorHelper(root.children[0], node1, node2, result);
+      right = lowestCommonAncestorHelper(root.children[1], node1, node2, result);
+    }
     if (left && right || rootIsEitherNode && (left || right)) result[0] = root;
     return left || right || rootIsEitherNode;
   }
 
-  public TreeNode lowestCommonAncestor(TreeNode node1, TreeNode node2) {
+  public Node lowestCommonAncestor(Node node1, Node node2) {
     if (node1 == null || node2 == null) return null;
-    TreeNode[] result = new TreeNode[1];
+    Node[] result = new Node[1];
     boolean inputNodeExists = lowestCommonAncestorHelper(this.root, node1, node2, result);
     if (inputNodeExists && node1.value == node2.value) return node1;
     return result[0];
