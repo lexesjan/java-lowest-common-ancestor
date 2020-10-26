@@ -27,43 +27,34 @@ public class GraphTest {
             \
              5
     */
-    Node root = new Node(0);
-    root.children = new Node[2];
-    root.children[0] = new Node(1);
-    root.children[1] = new Node(2);
-    root.children[0].children = new Node[2];
-    root.children[0].children[0] = new Node(3);
-    root.children[0].children[1] = new Node(4);
-    root.children[0].children[1].children = new Node[2];
-    root.children[0].children[1].children[1] = new Node(5);
+    Node[] nodes = new Node[7];
+    for (int i = 0; i < nodes.length; i++) nodes[i] = new Node(i);
+    Node root = nodes[0];
+    root.children = new Node[] {nodes[1], nodes[2]};
+    nodes[1].children = new Node[] {nodes[3], nodes[4]};
+    nodes[4].children = new Node[] {null, nodes[5]};
 
     return Arrays.asList(
         new Object[][] {
           // null cases
           {"LCA should be null", new Graph(null), null, null, null},
           // base cases
-          {"LCA should be 0", new Graph(root), root.children[0], root.children[1], root},
-          {"LCA should be 0", new Graph(root), root.children[0].children[0], root.children[1], root},
-          {"LCA should be 0", new Graph(root), root.children[0].children[1].children[1], root.children[1], root},
-          {
-            "LCA should be 1",
-            new Graph(root),
-            root.children[0].children[0],
-            root.children[0].children[1].children[1],
-            root.children[0]
-          },
-          {"LCA should be 1", new Graph(root), root.children[0].children[0], root.children[0].children[1], root.children[0]},
+          {"LCA should be 0", new Graph(root), nodes[1], nodes[2], root},
+          {"LCA should be 0", new Graph(root), nodes[3], nodes[2], root},
+          {"LCA should be 0", new Graph(root), nodes[5], nodes[2], root},
+          {"LCA should be 1", new Graph(root), nodes[3], nodes[5], nodes[1]},
+          {"LCA should be 1", new Graph(root), nodes[3], nodes[4], nodes[1]},
           // lca is one of the input nodes cases
-          {"LCA should be 0", new Graph(root), root.children[0], root, root},
-          {"LCA should be 1", new Graph(root), root.children[0].children[0], root.children[0], root.children[0]},
-          {"LCA should be 1", new Graph(root), root.children[0], root.children[0].children[1], root.children[0]},
+          {"LCA should be 0", new Graph(root), nodes[1], root, root},
+          {"LCA should be 1", new Graph(root), nodes[3], nodes[1], nodes[1]},
+          {"LCA should be 1", new Graph(root), nodes[1], nodes[4], nodes[1]},
           // lca is both of the input nodes cases
           {"LCA should be 0", new Graph(root), root, root, root},
-          {"LCA should be 3", new Graph(root), root.children[0].children[0], root.children[0].children[0], root.children[0].children[0]},
+          {"LCA should be 3", new Graph(root), nodes[3], nodes[3], nodes[3]},
           // node is not in the graph case
-          {"LCA should be null", new Graph(root), root.children[0].children[0], new Node(6), null},
-          {"LCA should be null", new Graph(root), new Node(6), new Node(6), null},
-          {"LCA should be null", new Graph(root), root.children[0].children[0], null, null},
+          {"LCA should be null", new Graph(root), nodes[3], nodes[6], null},
+          {"LCA should be null", new Graph(root), nodes[6], nodes[6], null},
+          {"LCA should be null", new Graph(root), nodes[3], null, null},
         });
   }
 
@@ -73,12 +64,7 @@ public class GraphTest {
   private final Node node2;
   private final Node expectedOutput;
 
-  public GraphTest(
-      String message,
-      Graph graph,
-      Node node1,
-      Node node2,
-      Node expectedOutput) {
+  public GraphTest(String message, Graph graph, Node node1, Node node2, Node expectedOutput) {
     this.message = message;
     this.graph = graph;
     this.node1 = node1;
