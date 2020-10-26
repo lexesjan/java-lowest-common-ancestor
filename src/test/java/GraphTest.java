@@ -46,6 +46,11 @@ public class GraphTest {
     Node[] nodes1 = new Node[6];
     for (int i = 0; i < nodes1.length; i++) nodes1[i] = new Node(i);
     Node root1 = nodes1[0];
+    root1.children = new Node[] {nodes1[1], nodes1[3], nodes1[2], nodes1[5]};
+    nodes1[1].children = new Node[]{nodes1[3]};
+    nodes1[2].children = new Node[]{nodes1[3]};
+    nodes1[3].children = new Node[]{nodes1[4]};
+    nodes1[5].children = new Node[]{nodes1[4]};
 
     return Arrays.asList(
         new Object[][] {
