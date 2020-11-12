@@ -13,7 +13,7 @@ You will need to have installed:
 ```
 git clone https://github.com/lexesjan/java-lowest-common-ancestor.git
 ```
-1. To build and run the Gradle tests use the following command
+2. To build and run the Gradle tests use the following command
 ```
-./gradlew test
+cd ./java-lowest-common-ancestor && ./gradlew test
 ```
